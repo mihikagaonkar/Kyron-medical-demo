@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kyron Medical AI Patient Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#01202F',
+            blue: '#1C94BC',
+            coral: '#FF754C'
+          },
+          boxShadow: {
+            glass: '0 10px 30px rgba(1, 32, 47, 0.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at 20% 20%, rgba(28, 148, 188, 0.35), rgba(1, 32, 47, 1) 45%),
+                  radial-gradient(circle at 80% 0%, rgba(255, 117, 76, 0.25), transparent 40%),
+                  #01202F;
+      min-height: 100vh;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .fade-slide {
+      transition: all 0.35s ease;
+    }
+  </style>
+</head>
+<body class="text-white antialiased">
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">Kyron Medical Patient Assistant</h1>
+      <p class="text-blue/90 mt-2">Chat-first scheduling with seamless voice handoff when a patient wants a call.</p>
+    </header>
+
+    <section>
+      <div class="glass rounded-2xl shadow-glass p-6 md:p-8 fade-slide flex flex-col min-h-[70vh]">
+        <h2 class="text-xl font-semibold mb-4">AI Chat + Voice Handoff</h2>
+        <p class="text-sm text-white/75 mb-4">Use chat to schedule, reschedule, or ask for the next available appointment. Switch to phone any time for a live callback.</p>
+        <div id="chatLog" class="flex-1 min-h-56 max-h-80 overflow-y-auto space-y-3 mb-4 pr-1"></div>
+
+        <form id="chatForm" class="flex gap-2 mb-3">
+          <input id="chatInput" class="flex-1 rounded-lg bg-white/20 placeholder-white/70 p-3" placeholder="Ask about scheduling or next steps" required />
+          <button class="bg-blue hover:bg-blue/90 px-4 rounded-lg" type="submit">Send</button>
+        </form>
+
+        <button id="switchToPhoneBtn" class="bg-coral hover:bg-coral/90 py-3 rounded-lg font-medium">Switch to Phone</button>
+        <p id="handoffStatus" class="text-sm mt-3 text-white/80"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app/static/app.js"></script>
+</body>
+</html>
