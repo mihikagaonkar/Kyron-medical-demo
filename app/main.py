@@ -97,6 +97,8 @@ def chat(payload: ChatRequest):
 
     previous_intake = dict(session.get("intake", {}))
     session["intake"] = update_intake_from_message(session.get("intake", {}), payload.message)
+    if payload.sms_opt_in is not None:
+        session["intake"]["sms_opt_in"] = payload.sms_opt_in
     phone = session["intake"].get("phone")
     if phone:
         session_store[phone] = session

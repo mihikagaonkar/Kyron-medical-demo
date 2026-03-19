@@ -25,6 +25,7 @@ class AppointmentResponse(BaseModel):
 class ChatRequest(BaseModel):
     session_id: str
     message: str = Field(min_length=1, max_length=1000)
+    sms_opt_in: bool | None = None
 
 
 class ChatResponse(BaseModel):

@@ -1,10 +1,19 @@
 const chatForm = document.getElementById('chatForm');
 const chatInput = document.getElementById('chatInput');
 const chatLog = document.getElementById('chatLog');
+const smsOptInToggle = document.getElementById('smsOptInToggle');
 const switchToPhoneBtn = document.getElementById('switchToPhoneBtn');
 const handoffStatus = document.getElementById('handoffStatus');
 
 let sessionId = localStorage.getItem('kyron_session_id') || '';
+let smsOptIn = localStorage.getItem('kyron_sms_opt_in') === 'true';
+
+smsOptInToggle.checked = smsOptIn;
+
+smsOptInToggle.addEventListener('change', () => {
+  smsOptIn = smsOptInToggle.checked;
+  localStorage.setItem('kyron_sms_opt_in', String(smsOptIn));
+});
 
 function addChatMessage(role, text) {
   const msg = document.createElement('div');
@@ -34,7 +43,7 @@ chatForm.addEventListener('submit', async (event) => {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId, message })
+      body: JSON.stringify({ session_id: sessionId, message, sms_opt_in: smsOptIn })
     });
     if (!response.ok) {
       throw new Error('Chat service unavailable.');
