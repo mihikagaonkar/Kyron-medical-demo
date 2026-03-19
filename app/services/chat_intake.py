@@ -1,8 +1,6 @@
 import re
 from datetime import datetime
 
-from app.services.scheduling import BODY_PART_TO_SPECIALTY
-
 REQUIRED_CHAT_FIELDS = (
     "full_name",
     "dob",
@@ -181,9 +179,20 @@ def extract_name(message: str, allow_plain: bool = False) -> str | None:
 
 def extract_body_part(message: str, allow_plain: bool = False) -> str | None:
     lowered = message.lower()
-    for body_part in sorted(BODY_PART_TO_SPECIALTY, key=len, reverse=True):
-        if body_part in lowered:
-            return body_part
+
+    patterns = [
+        r"(?:appointment|schedule|book)\s+(?:for|about)\s+([a-z][a-z\s-]{1,60})",
+        r"(?:for|about)\s+my\s+([a-z][a-z\s-]{1,60})",
+        r"(?:for|about)\s+([a-z][a-z\s-]{1,60})",
+        r"i need\s+(?:an\s+)?appointment\s+for\s+([a-z][a-z\s-]{1,60})",
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, lowered)
+        if match:
+            extracted = match.group(1).strip(" .,!?")
+            if extracted:
+                return extracted
+
     if allow_plain and re.fullmatch(r"[A-Za-z][A-Za-z\s-]{1,60}", message.strip()):
         return message.strip().lower()
     return None

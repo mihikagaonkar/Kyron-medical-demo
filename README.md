@@ -14,7 +14,7 @@ A web-based AI Patient Assistant for intake, semantic scheduling, and chat-to-vo
 - **Context-Aware Handoff**: `Switch to Phone` endpoint launches outbound call via Vapi/Retell and includes chat + intake context.
 - **Post-Booking Notifications**:
   - Email confirmation via SMTP.
-  - SMS confirmation via Twilio (only when patient opts in).
+  
 - **Safety Guardrails**:
   - AI system prompt blocks diagnosis/treatment advice.
   - Restricts assistant to operational intake/scheduling content.
@@ -25,7 +25,7 @@ A web-based AI Patient Assistant for intake, semantic scheduling, and chat-to-vo
 - **AI/Voice**:
   - Groq for web chat
   - Vapi for voice handoff
-  - Twilio for SMS notifications
+  
 
 
 
@@ -33,7 +33,7 @@ A web-based AI Patient Assistant for intake, semantic scheduling, and chat-to-vo
 ## Technical Architecture (Brief)
 1. Browser sends intake payload to FastAPI `/api/intake_schedule`.
 2. Backend applies semantic mapping and picks nearest specialty-matched slot from in-memory availability.
-3. Backend sends email/SMS confirmation through SMTP + Twilio.
+3. Backend sends email confirmation through SMTP.
 4. Chat requests hit `/api/chat`,  with strict guardrail prompt.
 5. Voice handoff calls `/api/switch-to-phone`, which forwards session context to Vapi outbound call API.
 6. Frontend receives status updates and displays booking/handoff outcomes in real time.
@@ -60,6 +60,6 @@ A web-based AI Patient Assistant for intake, semantic scheduling, and chat-to-vo
 - `app/services/ai.py` — AI chat with guardrails
 - `app/services/scheduling.py` — semantic routing + availability logic
 - `app/services/voice.py` — Vapi outbound call bridge
-- `app/services/notifications.py` — SMTP + Twilio confirmations
+- `app/services/notifications.py` — SMTP 
 - `app/static/index.html` — glassmorphism UI shell
 - `app/static/app.js` — client-side workflow logic

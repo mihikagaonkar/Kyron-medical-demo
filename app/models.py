@@ -28,15 +28,35 @@ class ChatRequest(BaseModel):
     sms_opt_in: bool | None = None
 
 
+class DoctorAvailability(BaseModel):
+    doctor: str
+    specialty: str
+    location: str
+    slots: list[str]
+
+
+class ProposedSlot(BaseModel):
+    doctor_name: str
+    specialty: str
+    date: date
+    time: str
+    location: str
+    scheduled_for: datetime
+
+
 class ChatResponse(BaseModel):
     response: str
     phone: str | None = None
     booking_completed: bool = False
+    doctor_availabilities: list[DoctorAvailability] = []
+    proposed_slots: list[ProposedSlot] = []
 
 
 class SwitchToPhoneRequest(BaseModel):
     session_id: str
     phone: str | None = None
+    doctor_availabilities: list[DoctorAvailability] | None = None
+    proposed_slots: list[ProposedSlot] | None = None
 
 
 class SwitchToPhoneResponse(BaseModel):

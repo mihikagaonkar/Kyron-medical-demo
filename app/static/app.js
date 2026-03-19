@@ -7,6 +7,8 @@ const handoffStatus = document.getElementById('handoffStatus');
 
 let sessionId = localStorage.getItem('kyron_session_id') || '';
 let smsOptIn = localStorage.getItem('kyron_sms_opt_in') === 'true';
+let doctorAvailabilities = JSON.parse(localStorage.getItem('kyron_doctor_availabilities') || '[]');
+let proposedSlots = JSON.parse(localStorage.getItem('kyron_proposed_slots') || '[]');
 
 smsOptInToggle.checked = smsOptIn;
 
@@ -52,6 +54,10 @@ chatForm.addEventListener('submit', async (event) => {
     if (data.phone) {
       localStorage.setItem('kyron_phone', data.phone);
     }
+    doctorAvailabilities = data.doctor_availabilities || [];
+    proposedSlots = data.proposed_slots || [];
+    localStorage.setItem('kyron_doctor_availabilities', JSON.stringify(doctorAvailabilities));
+    localStorage.setItem('kyron_proposed_slots', JSON.stringify(proposedSlots));
     addChatMessage('assistant', data.response);
   } catch (error) {
     addChatMessage('assistant', error.message);
@@ -78,7 +84,12 @@ switchToPhoneBtn.addEventListener('click', async () => {
     const response = await fetch('/api/switch-to-phone', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId || phone, phone })
+      body: JSON.stringify({
+        session_id: sessionId || phone,
+        phone,
+        doctor_availabilities: doctorAvailabilities,
+        proposed_slots: proposedSlots
+      })
     });
 
     const data = await response.json();

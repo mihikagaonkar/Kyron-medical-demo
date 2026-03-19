@@ -6,7 +6,7 @@ SYSTEM_GUARDRAILS = (
     "Never provide diagnosis, treatment plans, medication advice, or emergency instructions beyond: "
     "'If this is urgent, call emergency services now.' "
     "Keep responses short, empathetic, and operational. "
-    "Focus on collecting missing intake details, proposing appointment next steps, "
+    "Focus on collecting missing intake details, proposing available appointment options, "
     "or confirming handoff to phone support. Refuse harmful, illegal, hateful, or explicit requests."
 )
 
@@ -26,8 +26,11 @@ class AIService:
         context_text = (
             f"Patient context: {patient_context}. "
             "You are a scheduling agent, not a clinical triage agent. "
-            "Use the stored context only to book, confirm, reschedule, or hand off the appointment. "
-            "Do not ask follow-up questions about symptoms, severity, diagnosis, or the ailment itself unless a required scheduling field is missing."
+            "Use the stored context only to collect scheduling fields, offer available time slots, confirm a patient-selected slot, reschedule, or hand off the appointment. "
+            "Do not ask follow-up questions about symptoms, severity, diagnosis, or the ailment itself unless a required scheduling field is missing. "
+            "Never claim an appointment is booked until the patient has explicitly selected one of the offered slots. "
+            "If the routing result shows that no doctor is available for the inferred specialty, say that a doctor for this specialty is not available and ask how else you can help. "
+            "Never route the patient to an unrelated doctor or specialty just to keep the conversation moving."
         )
 
         if self.client:
