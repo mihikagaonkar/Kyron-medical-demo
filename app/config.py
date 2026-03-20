@@ -17,11 +17,6 @@ class Settings:
     vapi_assistant_id = os.getenv("VAPI_ASSISTANT_ID")
     vapi_phone_number_id = os.getenv("VAPI_PHONE_ID")
 
-    twilio_account_sid = os.getenv("TWILIO_ACCOUNT_SID" )
-    twilio_auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-    twilio_sms_from = os.getenv("TWILIO_SMS_FROM")
-    twilio_caller_id = os.getenv("TWILIO_CALLER_ID")
-
     smtp_host = os.getenv("SMTP_HOST")
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
     smtp_username = os.getenv("SMTP_USERNAME")

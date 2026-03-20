@@ -125,7 +125,8 @@ def infer_specialty(body_part: str) -> str | None:
 
 
 def build_availability_window(num_days: int = 60):
-    start_date = date.today()
+    start_date = date.today() +timedelta(days=1)
+
     
     doctor_availabilities = []
 
