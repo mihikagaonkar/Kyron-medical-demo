@@ -7,7 +7,7 @@ load_dotenv()
 class Settings:
     app_env = os.getenv("APP_ENV")
     app_host = os.getenv("APP_HOST")
-    app_port = int(os.getenv("APP_PORT"))
+    app_port = int(os.getenv("APP_PORT", 8000))
 
     groq_api_key = os.getenv("GROQ_API_KEY")
     groq_model = os.getenv("GROQ_MODEL")
